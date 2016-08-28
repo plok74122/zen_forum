@@ -7,9 +7,13 @@
 	<td><%=	t.user.email %></td>
 	<td><%=	t.created_at %></td>
 	<td><%=	t.updated_at %></td>
-
+    <td><%=	link_to "show",topic_path(t)%></td>
+    <td><%=	link_to "edit",edit_topic_path(t) if current_user==t.user%></td>
+    <td><%=	link_to "delete",topic_path(t),:method=>"delete" if current_user==t.user %></td>
    </tr>
   </table>
 <% end %>
+
+<td><%=	link_to "new",new_topic_path%></td>
 
 <%= paginate @topics %>
