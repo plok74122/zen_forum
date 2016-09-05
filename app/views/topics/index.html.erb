@@ -1,49 +1,59 @@
 <h1>Topic List</h1>
 <div>
-categories:
-<%= link_to 'commercial', topics_path( :category => "commercial") %>
-<%= link_to 'technical', topics_path( :category => "technical") %>
-<%= link_to 'psychological', topics_path( :category => "psychological") %>
-<%= link_to 'all', topics_path %>
+  categories:
+  <%= link_to 'commercial', topics_path( :category => "commercial") %>
+  <%= link_to 'technical', topics_path( :category => "technical") %>
+  <%= link_to 'psychological', topics_path( :category => "psychological") %>
+  <%= link_to 'all', topics_path %>
 
 </div>
 
 
 <div>
-Sort_by:
-<%= link_to 'default', topics_path %>
-<%= link_to 'reply number', topics_path( :order => "comments_number") %>
-<%= link_to 'lastest reply time', topics_path( :order => "comments_lastest_time") %>
+  Sort_by:
+  <%= link_to 'default', topics_path %>
+  <%= link_to 'reply number', topics_path( :order => "comments_number") %>
+  <%= link_to 'lastest reply time', topics_path( :order => "comments_lastest_time") %>
 </div>
 
 <br>
+<table class="table table-striped">
+ <tr>
+    <th>標題</th>
+    <th>作者帳號</th> 
+    <th>回覆數</th>
+    <th>最後回覆時間</th>
+    <th>內容</th>
+  
+ </tr> 
 
 <% @topics.each do |t| %>
-  <table>
-   <tr>
-  
+    
+ <tr>
 	<td><%=	t.title %></td>
 	<td><%=	t.user.email %></td>
-	<td><%=	t.created_at %></td>
-	<td><%=	t.updated_at %></td>
   <td><%= t.comments_number %></td>
   <td><%= t.comments_lastest_time %></td>
-    <td><%=	link_to "show",topic_path(t)%></td>
-    <td><%=	link_to "edit",edit_topic_path(t) if current_user==t.user%></td>
-    <td><%=	link_to "delete",topic_path(t),:method=>"delete" if current_user==t.user %></td>
-   </tr>
-  </table>
+  <td> 
+
+      <%= link_to "show",topic_path(t),:class =>"btn btn-primary"%>
+      <%= link_to "edit",edit_topic_path(t),:class =>"btn btn-warning" if current_user==t.user%>
+      <%=	link_to "delete",topic_path(t),:method=>"delete",:class =>"btn btn-danger" if current_user==t.user %>
+   </td>
+ </tr>
+
 <% end %>
+</table>
 
 <%=	link_to "new",new_topic_path%>
 <br>
 <%= link_to "about",about_topics_path%>
 
 <div>
-<% if @user %>
-see profile:
-<%= link_to @user.id,users_path%>
-<% end %>
+  <% if @user %>
+    see profile of user_id:
+    <%= link_to @user.id,users_path%>
+  <% end %>
 </div>
 
 <%= paginate @topics %>
