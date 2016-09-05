@@ -24,9 +24,13 @@ class TopicsController < ApplicationController
         	sort_by ='comments_number Desc'
         elsif params[:order] == 'comments_lastest_time'
         	sort_by ='comments_lastest_time Desc'
+        elsif params[:order] == 'visitingnumber'
+        	sort_by ='visitingnumber Desc'
         else
         	sort_by ='created_at'
         end
+
+
 
 		@topics = @topics.order(sort_by).page(params[:page]).per(5)
 
@@ -37,7 +41,10 @@ class TopicsController < ApplicationController
 	end
 
 	def show
+			
 		@topic=Topic.find(params[:id])
+		@topic.visitingnumber=@topic.visitingnumber+1
+		@topic.save
 		@user=@topic.user
 		@comments=@topic.comments.page(params[:page]).per(5)
 		@comment=Comment.new

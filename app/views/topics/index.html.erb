@@ -14,6 +14,7 @@
   <%= link_to 'default', topics_path %>
   <%= link_to 'reply number', topics_path( :order => "comments_number") %>
   <%= link_to 'lastest reply time', topics_path( :order => "comments_lastest_time") %>
+    <%= link_to 'visitingnumber', topics_path( :order => "visitingnumber") %>
 </div>
 
 <br>
@@ -23,8 +24,8 @@
     <th>作者帳號</th> 
     <th>回覆數</th>
     <th>最後回覆時間</th>
+    <th>點閱數</th>
     <th>內容</th>
-  
  </tr> 
 
 <% @topics.each do |t| %>
@@ -34,6 +35,7 @@
 	<td><%=	t.user.email %></td>
   <td><%= t.comments_number %></td>
   <td><%= t.comments_lastest_time %></td>
+  <td><%= t.visitingnumber %></td>
   <td> 
 
       <%= link_to "show",topic_path(t),:class =>"btn btn-primary"%>
