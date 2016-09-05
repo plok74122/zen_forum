@@ -43,11 +43,19 @@ class TopicsController < ApplicationController
 	def show
 			
 		@topic=Topic.find(params[:id])
+		# if params[:record]="viewing"
 		@topic.visitingnumber=@topic.visitingnumber+1
 		@topic.save
+	    # end
 		@user=@topic.user
 		@comments=@topic.comments.page(params[:page]).per(5)
+		
+		if params[:comment_id]
+		@topic = Topic.find(params[:id])
+		@comment=@topic.comments.find(params[:comment_id])
+	    else
 		@comment=Comment.new
+	    end
 	end
 
 	def new
