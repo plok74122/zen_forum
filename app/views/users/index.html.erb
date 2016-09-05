@@ -1,0 +1,34 @@
+<h1>User's profile</h1>
+<%= @user.profile %>
+<br>	
+
+<% if @user.profile %>
+	<%=	link_to "edit profile",edit_user_path(@user)%>
+<% else %>
+	<%=	link_to "add profile",edit_user_path(@user)%>
+<% end %>
+
+
+<h2>發表過文章</h2>
+<ul>
+<% @user.topics.each do |t| %>
+	<li>
+		文章名稱：<%= t.title %>
+		文章內容：<%= t.content %>
+		<%=	link_to "show",topic_path(t)%>
+	</li>
+<% end %>
+</ul>
+
+<h2>發表過留言</h2>
+<ul>
+<% @user.comments.each do |c| %>
+	<li>
+		文章名稱：<%= c.topic.title %>
+		留言內容：<%= c.content %>
+		<%=	link_to "show",topic_path(c.topic)%>
+	</li>
+<% end %>
+</ul>
+
+<%=	link_to "home",topics_path %>

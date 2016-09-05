@@ -1,11 +1,11 @@
 <% if @topic.errors.any? %>
-      <ul>
+    <ul>
       <% @topic.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      </ul>
+    </ul>
 <% end %>
-
+    <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
 	<%=	f.label :title %>
 	<%=	f.text_field :title %>
 	<%=	f.label :content %>
