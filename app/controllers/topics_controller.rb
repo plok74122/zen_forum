@@ -104,6 +104,22 @@ class TopicsController < ApplicationController
 		@comments=Comment.all
 	end
 
+	def keep
+		@topic=Topic.find(params[:id])
+		if current_user.keepedTopic?(@topic)
+			current_user.keeptopics.delete(@topic)
+			# flash[:notice]="你已取消收藏"
+		else
+			current_user.keeptopics <<@topic
+			# flash[:notice]="收藏成功"
+		end
+
+		respond_to do |format|
+			format.js
+		end
+
+	end
+
 	private
 	def check_author
     @topic = current_user.topics.find_by_id(params[:id])

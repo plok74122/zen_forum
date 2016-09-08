@@ -5,4 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :topics,:dependent=>:destroy
   has_many :comments,:dependent=>:destroy
+  has_many :keepships, :dependent=>:destroy
+  has_many :keeptopics, :through=>:keepships, :source => :topic
+
+  def keepedTopic?(topic)
+  	self.keeptopics.include?(topic)
+  end
 end

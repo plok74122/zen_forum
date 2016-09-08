@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   		get :about
   		# get :profile
   	end
+  	member do
+  		post :keep
+  	end
 
   end
 

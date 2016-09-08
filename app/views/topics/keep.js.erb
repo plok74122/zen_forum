@@ -1,0 +1,5 @@
+<% if current_user.keepedTopic?(@topic) %>
+	$('.keep input[type=submit]').val("取消收藏")
+<% else %>
+	$('.keep input[type=submit]').val("收藏")
+<% end %>

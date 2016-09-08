@@ -32,5 +32,16 @@
 	<% end %>
 	</ul>
 
+<h2>收藏文章</h2>
+
+	<ul>
+	<% @user.keeptopics.each do |t| %>
+		<li>
+			文章名稱：<%= t.title %>
+			<%=	link_to "show",topic_path(t)%>
+		</li>
+	<% end %>
+	</ul>
+
 
 <%=	link_to "home",topics_path %>

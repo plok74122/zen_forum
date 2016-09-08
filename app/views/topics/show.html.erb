@@ -11,6 +11,15 @@
 	<li><%= @topic.created_at %></li>
 	<li><%= @topic.updated_at %></li>
 </ul>
+<br>
+
+<div class="keep">
+	<% if current_user.keepedTopic?(@topic) %>
+	  <%= button_to "取消收藏",keep_topic_path(@topic),:remote => true  %>
+	<% else %>
+	  <%= button_to "收藏",keep_topic_path(@topic),:remote => true  %>
+	<% end %>
+</div>
 
 <br>
 <h2>comments</h2>
