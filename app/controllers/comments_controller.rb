@@ -9,18 +9,26 @@ class CommentsController < ApplicationController
 	    
 	    if @comment.save
 	    	flash[:notice]="新增成功"
+	    	# @topic.comments_number += 1
+      # 	@topic.comments_lastest_time = @comment.created_at
+      # 	@topic.save
+			else
+				flash[:alert] = "留言不能是空白"
 	    end
-		redirect_to topic_path(@topic)
+				redirect_to topic_path(@topic)
 
 	    
 	end
 
 	def update
 		@topic = Topic.find(params[:topic_id])
-		if @topic.comments.find(params[:id]).update(comment_params)
-		   flash[:notice]="更新成功"
-	    end
-		redirect_to topic_path(@topic)
+		# @comment = Comment.find(params[:id])
+		if @comment.update(comment_params)
+		  flash[:notice]="更新成功"
+			redirect_to topic_path(@topic)
+		else
+	 		render 'topics/show.html.erb'
+	  end
 	end
 
 	def destroy
@@ -28,8 +36,20 @@ class CommentsController < ApplicationController
 		# @comment=@topic.comments.find(params[:id])
 		if @comment.delete
 			flash[:notice]="刪除成功"
+			# @topic.comments_number -= 1
+			
+   #    @topic.save
+
+			# if @topic.comments.count==0
+			# 	@topic.comments_lastest_time =" "
+			# 	@topic.save
+   #    else  
+   #      @topic.comments_lastest_time = @topic.comments.last.created_at
+   #    end
+
 		end
 		redirect_to topic_path(@topic)
+
 	end
 
 	protected

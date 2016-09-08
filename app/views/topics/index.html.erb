@@ -1,9 +1,9 @@
 <h1>Topic List</h1>
 <div>
   categories:
-  <%= link_to 'commercial', topics_path( :category => "commercial") %>
-  <%= link_to 'technical', topics_path( :category => "technical") %>
-  <%= link_to 'psychological', topics_path( :category => "psychological") %>
+  <%= link_to 'commercial', topics_path( :category => "commercial", :order => params[:order]) %>
+  <%= link_to 'technical', topics_path( :category => "technical", :order => params[:order]) %>
+  <%= link_to 'psychological', topics_path( :category => "psychological", :order => params[:order]) %>
   <%= link_to 'all', topics_path %>
 
 </div>
@@ -11,18 +11,19 @@
 
 <div>
   Sort_by:
-  <%= link_to 'default', topics_path %>
-  <%= link_to 'reply number', topics_path( :order => "comments_number") %>
-  <%= link_to 'lastest reply time', topics_path( :order => "comments_lastest_time") %>
-    <%= link_to 'visitingnumber', topics_path( :order => "visitingnumber") %>
+  <%= link_to 'default', topics_path(:category => params[:category]) %>
+  <%= link_to 'reply number', topics_path( :order => "comments_number", :category => params[:category]) %>
+  <%= link_to 'lastest reply time', topics_path( :order => "comments_lastest_time", :category => params[:category]) %>
+    <%= link_to 'visitingnumber', topics_path( :order => "visitingnumber", :category => params[:category]) %>
 </div>
 
 <br>
 <table class="table table-striped">
  <tr>
     <th>標題</th>
-    <th>作者帳號</th> 
+    <th>作者編號</th> 
     <th>回覆數</th>
+    <th>回覆者</th>
     <th>最後回覆時間</th>
     <th>點閱數</th>
     <th>內容</th>
@@ -32,13 +33,14 @@
     
  <tr>
 	<td><%=	t.title %></td>
-	<td><%=	t.user.email %></td>
+	<td><%= link_to	t.user.id ,user_path(t.user,:topic_id=>t.id) %></td>
   <td><%= t.comments_number %></td>
+  <td><%= t.comments.map{|c| c.user.email}.uniq %></td> 
   <td><%= t.comments_lastest_time %></td>
   <td><%= t.visitingnumber %></td>
   <td> 
 
-      <%= link_to "show",topic_path(t),:class =>"btn btn-primary"%>
+      <%= link_to "show",topic_path(t,:record => "viewing"),:class =>"btn btn-primary"%>
       <%= link_to "edit",edit_topic_path(t),:class =>"btn btn-warning" if current_user==t.user%>
       <%=	link_to "delete",topic_path(t),:method=>"delete",:class =>"btn btn-danger" if current_user==t.user %>
    </td>
@@ -50,11 +52,12 @@
 <%=	link_to "new",new_topic_path%>
 <br>
 <%= link_to "about",about_topics_path%>
+<br>
 
 <div>
-  <% if @user %>
-    see profile of user_id:
-    <%= link_to @user.id,users_path%>
+  <% if current_user %>
+    click your user_id and see your profile:
+    <%= link_to current_user.id,user_path(current_user)%>
   <% end %>
 </div>
 

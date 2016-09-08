@@ -7,7 +7,7 @@
 <ul>
 	<li><%= @topic.title %></li>
 	<li><%= @topic.content %></li>
-	<li><%= @user.email %></li>
+	<li><%= @topic.user.email %></li>
 	<li><%= @topic.created_at %></li>
 	<li><%= @topic.updated_at %></li>
 </ul>
@@ -16,29 +16,30 @@
 <h2>comments</h2>
 
 <ul>
-<% @comments.each do |c| %>
+<% comments = @topic.comments_with_paginate(params[:page]) %>
+<% comments.each do |c| %>
   <li>
     <%= c.content %>
     <%= c.user.email %>
-    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id) if c.user==current_user %>
-    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete" if c.user==current_user%>
+    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id)  %>
+    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete" %>
   </li>
 <% end %>
 </ul>
-<%= paginate @comments %>
+<%= paginate comments %>
 
 <% if @comment.id %>
-<%= form_for @comment, :url=>topic_comment_path(@topic,@comment) do |f| %>
-	<%=	f.label :content %>
-	<%=	f.text_area :content %>
-	<%=	f.submit %>
-<% end %>
+	<%= form_for @comment, :url=>topic_comment_path(@topic,@comment) do |f| %>
+		<%=	f.label :content %>
+		<%=	f.text_area :content %>
+		<%=	f.submit %>
+	<% end %>
 <% else %>
-<%= form_for @comment, :url=>topic_comments_path(@topic) do |f| %>
-	<%=	f.label :content %>
-	<%=	f.text_area :content %>
-	<%=	f.submit %>
-<% end %>
+	<%= form_for @comment, :url=>topic_comments_path(@topic) do |f| %>
+		<%=	f.label :content %>
+		<%=	f.text_area :content %>
+		<%=	f.submit %>
+	<% end %>
 <% end%>
 
 <% if @comment.errors.any? %>

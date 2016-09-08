@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   		get :about
   		# get :profile
   	end
+
   end
 
 

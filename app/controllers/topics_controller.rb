@@ -9,23 +9,24 @@ class TopicsController < ApplicationController
         	topic.save
         end
 
-        if params[:category]=="commercial"
-		    @topics = Category.find(1).topics
-		elsif params[:category]=="technical"
-		    @topics = Category.find(2).topics
-		elsif params[:category]=="psychological"
-		    @topics = Category.find(3).topics
-		else
+      if params[:category]
+		    @topics = Category.find_by_name(params[:category]).topics
+		# elsif params[:category]=="technical"
+		#     @topics = Category.find(2).topics
+		# elsif params[:category]=="psychological"
+		#     @topics = Category.find(3).topics
+			else
 		    @topics=Topic.all 
-		end
+			end
 
- 
-        if params[:order] == 'comments_number'
-        	sort_by ='comments_number Desc'
-        elsif params[:order] == 'comments_lastest_time'
-        	sort_by ='comments_lastest_time Desc'
-        elsif params[:order] == 'visitingnumber'
-        	sort_by ='visitingnumber Desc'
+
+        if params[:order]     
+        # == 'comments_number'
+        	sort_by = "#{params[:order]} Desc"
+        # elsif params[:order] == 'comments_lastest_time'
+        # 	sort_by ='comments_lastest_time Desc'
+        # elsif params[:order] == 'visitingnumber'
+        # 	sort_by ='visitingnumber Desc'
         else
         	sort_by ='created_at'
         end
@@ -34,28 +35,35 @@ class TopicsController < ApplicationController
 
 		@topics = @topics.order(sort_by).page(params[:page]).per(5)
 
-		if current_user
-			@user=current_user
-		end
+		# if current_user
+		# 	@user=current_user
+		# end
 
 	end
 
 	def show
 			
 		@topic=Topic.find(params[:id])
-		# if params[:record]="viewing"
-		@topic.visitingnumber=@topic.visitingnumber+1
-		@topic.save
-	    # end
-		@user=@topic.user
-		@comments=@topic.comments.page(params[:page]).per(5)
+		if params[:record]=="viewing"
+			@topic.visitingnumber=@topic.visitingnumber+1
+			@topic.save
+	   end
+		# @user=@topic.user
+
 		
 		if params[:comment_id]
-		@topic = Topic.find(params[:id])
-		@comment=@topic.comments.find(params[:comment_id])
-	    else
-		@comment=Comment.new
-	    end
+			@topic = Topic.find(params[:id])
+			@comment=@topic.comments.find(params[:comment_id])
+	  else
+			@comment=Comment.new
+	  end
+
+    unless @comment.new_record? || @comment.is_author?(current_user)
+    	flash[:alert] = "This is not your comment!"
+    	redirect_to topic_path(@topic)
+    	return
+    end
+
 	end
 
 	def new
@@ -98,12 +106,12 @@ class TopicsController < ApplicationController
 
 	private
 	def check_author
-        @topic = current_user.topics.find_by_id(params[:id])
-	    unless @topic
-	    	flash[:notice]="作者才能執行"
-        	redirect_to topics_path
-        	return
-        end
+    @topic = current_user.topics.find_by_id(params[:id])
+    unless @topic
+  	  flash[:notice]="作者才能執行"
+    	redirect_to topics_path
+    	return
+    end
 	end
 
 end

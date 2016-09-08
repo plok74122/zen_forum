@@ -21,14 +21,16 @@
 </ul>
 
 <h2>發表過留言</h2>
-<ul>
-<% @user.comments.each do |c| %>
-	<li>
-		文章名稱：<%= c.topic.title %>
-		留言內容：<%= c.content %>
-		<%=	link_to "show",topic_path(c.topic)%>
-	</li>
-<% end %>
-</ul>
+
+	<ul>
+	<% @user.comments.each do |c| %>
+		<li>
+			文章名稱：<%= c.topic.title %>
+			留言內容：<%= c.content %>
+			<%=	link_to "show",topic_path(c.topic)%>
+		</li>
+	<% end %>
+	</ul>
+
 
 <%=	link_to "home",topics_path %>
