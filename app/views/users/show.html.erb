@@ -15,7 +15,21 @@
 	<li>
 		文章名稱：<%= t.title %>
 		文章內容：<%= t.content %>
-		<%=	link_to "show",topic_path(t)%>
+
+    <% if @user == current_user %>
+		  文章狀態：
+		  <% if t.status_published==true %>
+		    發布
+		    <%= link_to "show",topic_path(t)%>
+		  <% else %>
+         草稿
+         <%=	link_to "edit",edit_topic_path(t)%>
+      <% end %>
+    <% else %>
+      <%= link_to "show",topic_path(t)%>
+		<% end %> 
+		  
+		
 	</li>
 <% end %>
 </ul>
@@ -27,7 +41,20 @@
 		<li>
 			文章名稱：<%= c.topic.title %>
 			留言內容：<%= c.content %>
-			<%=	link_to "show",topic_path(c.topic)%>
+
+    <% if @user == current_user %>
+		  留言狀態：
+		  <% if c.status_published==true %>
+		     發布
+		    <%= link_to "show",topic_path(c.topic)%>
+		  <% else %>
+         草稿
+         <%=	link_to "edit",topic_path(c.topic,c)%>
+      <% end %>
+    <% else %>
+      <%= link_to "show",topic_path(c.topic)%>
+		<% end %> 			
+
 		</li>
 	<% end %>
 	</ul>

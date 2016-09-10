@@ -33,7 +33,7 @@ class TopicsController < ApplicationController
 
 
 
-		@topics = @topics.order(sort_by).page(params[:page]).per(5)
+		@topics = @topics.where(:status_published => :true).order(sort_by).page(params[:page]).per(5)
 
 		# if current_user
 		# 	@user=current_user
@@ -71,7 +71,7 @@ class TopicsController < ApplicationController
 	end
 
 	def create
-		@topic=Topic.new(params.require(:topic).permit(:title,:content,:category_ids=>[]))
+		@topic=Topic.new(params.require(:topic).permit(:title,:content,:status_published,:category_ids=>[]))
 	    @topic.user=current_user
 	    if @topic.save
 	    	flash[:notice]="新增成功"
@@ -85,7 +85,7 @@ class TopicsController < ApplicationController
 	end
 
 	def update
-		if @topic.update(params.require(:topic).permit(:title,:content))
+		if @topic.update(params.require(:topic).permit(:title,:content,:status_published))
 		  flash[:notice]="更新成功"
 		  redirect_to topic_path(@topic)
 		else

@@ -30,21 +30,23 @@
  </tr> 
 
 <% @topics.each do |t| %>
-    
+ 
  <tr>
 	<td><%=	t.title %></td>
-	<td><%= link_to	t.user.id ,user_path(t.user,:topic_id=>t.id) %></td>
+	<td><%= link_to	t.user.id ,user_path(t.user) %></td>
   <td><%= t.comments_number %></td>
   <td><%= t.comments.map{|c| c.user.email}.uniq %></td> 
   <td><%= t.comments_lastest_time %></td>
   <td><%= t.visitingnumber %></td>
   <td> 
-
       <%= link_to "show",topic_path(t,:record => "viewing"),:class =>"btn btn-primary"%>
       <%= link_to "edit",edit_topic_path(t),:class =>"btn btn-warning" if current_user==t.user%>
       <%=	link_to "delete",topic_path(t),:method=>"delete",:class =>"btn btn-danger" if current_user==t.user %>
    </td>
+
  </tr>
+ 
+ 
 
 <% end %>
 </table>

@@ -27,12 +27,14 @@
 <ul>
 <% comments = @topic.comments_with_paginate(params[:page]) %>
 <% comments.each do |c| %>
-  <li>
-    <%= c.content %>
-    <%= c.user.email %>
-    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id)  %>
-    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete" %>
-  </li>
+  <% if c.status_published == true %>
+	  <li>
+	    <%= c.content %>
+	    <%= c.user.email %>
+	    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id)  if c.user == current_user %>
+	    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete" if c.user == current_user %>
+	  </li>
+  <% end %>
 <% end %>
 </ul>
 <%= paginate comments %>
@@ -41,12 +43,14 @@
 	<%= form_for @comment, :url=>topic_comment_path(@topic,@comment) do |f| %>
 		<%=	f.label :content %>
 		<%=	f.text_area :content %>
+		<%= f.select(:status_published, [['publised',true],['draft',false]]) %>
 		<%=	f.submit %>
 	<% end %>
 <% else %>
 	<%= form_for @comment, :url=>topic_comments_path(@topic) do |f| %>
 		<%=	f.label :content %>
 		<%=	f.text_area :content %>
+		<%= f.select(:status_published, [['publised',true],['draft',false]]) %>
 		<%=	f.submit %>
 	<% end %>
 <% end%>
