@@ -1,0 +1,35 @@
+<ul>
+<h3>文章分類管理</h3>
+
+<% @categorys.each do |c| %>
+	<li>
+	    <%= c.name %>
+	    <%= link_to "edit", admin_categorys_path(:id => c.id) %>
+			<%= link_to "delete", admin_category_path(c), :method => "delete" %>	    	
+	</li>
+<% end %>
+</ul>
+
+<% if @category.id %>
+	<%= form_for @category, :url=> admin_category_path(@category) do |f| %>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+		<%= f.submit %>
+	<% end %>
+<% else %>
+	<%= form_for @category, :url=> admin_categorys_path do |f| %>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+		<%= f.submit %>
+	<% end %>
+<% end %>
+
+<% if @category.errors.any? %>
+    <ul>
+      <% @category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<%= link_to "admin home", admin_topics_path %>

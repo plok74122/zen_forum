@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
 	has_many :topic_categoryships, :dependent=>:destroy
 	has_many :topics, :through=>:topic_categoryships
+	validates_presence_of :name
 end

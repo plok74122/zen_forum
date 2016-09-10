@@ -15,7 +15,12 @@ Rails.application.routes.draw do
 
 
  resources :users 
+ 
+ namespace :admin do
+  resources :topics
+  resources :categorys 
 
+end
 
 root to: "topics#index"
 end
