@@ -1,6 +1,6 @@
 class Admin::TopicsController < ApplicationController
-
-    before_action :authenticate
+    before_action :authenticate_user!
+    before_action :authenticate_admin
     layout "admin"
 
     def index
@@ -9,10 +9,12 @@ class Admin::TopicsController < ApplicationController
 
     protected
 
-    def authenticate
-       authenticate_or_request_with_http_basic do |user_name, password|
-           user_name == "username" && password == "password"
-       end
+    def authenticate_admin
+      unless current_user.admin?
+        flash[:notice]="you are not allowed"
+        redirect_to topics_path
+      end
+
     end
 
 end

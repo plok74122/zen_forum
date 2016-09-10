@@ -122,12 +122,17 @@ class TopicsController < ApplicationController
 
 	private
 	def check_author
-    @topic = current_user.topics.find_by_id(params[:id])
-    unless @topic
-  	  flash[:notice]="作者才能執行"
-    	redirect_to topics_path
-    	return
-    end
+		if current_user.admin?
+			@topic = Topic.find_by_id(params[:id])
+		else	
+	    @topic = current_user.topics.find_by_id(params[:id])
+
+		    unless @topic 
+		  	  flash[:notice]="作者才能執行"
+		    	redirect_to topics_path
+		    	return
+		    end
+	  end 
 	end
 
 end

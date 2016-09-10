@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
 	def update
     @user=User.find(params[:id])
-		@user.update(params.require(:user).permit(:profile))
+		@user.update(params.require(:user).permit(:profile, :name))
 		redirect_to user_path(@user)
 	end
 

@@ -14,11 +14,13 @@
 <br>
 
 <div class="keep">
+ <% if current_user %>
 	<% if current_user.keepedTopic?(@topic) %>
 	  <%= button_to "取消收藏",keep_topic_path(@topic),:remote => true  %>
 	<% else %>
 	  <%= button_to "收藏",keep_topic_path(@topic),:remote => true  %>
 	<% end %>
+ <% end	%>
 </div>
 
 <br>

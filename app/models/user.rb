@@ -11,4 +11,8 @@ class User < ApplicationRecord
   def keepedTopic?(topic)
   	self.keeptopics.include?(topic)
   end
+
+  def admin?
+    self.role == "admin"
+  end
 end

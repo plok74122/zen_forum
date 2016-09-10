@@ -1,0 +1,13 @@
+<ul>
+<% @users.each do |u| %>
+<li>
+<%= u.email %>
+<%= u.name %>
+<%= u.profile %>
+<%= u.role %>
+<%= link_to "edit", edit_admin_user_path(u) %>
+</li>
+<% end %>
+</ul>
+
+<%= link_to "admin home", admin_topics_path %>
