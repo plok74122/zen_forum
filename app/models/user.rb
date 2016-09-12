@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :keepships, :dependent=>:destroy
   has_many :keeptopics, :through=>:keepships, :source => :topic
 
+  include Gravtastic
+  gravtastic
+  
   def keepedTopic?(topic)
   	self.keeptopics.include?(topic)
   end
