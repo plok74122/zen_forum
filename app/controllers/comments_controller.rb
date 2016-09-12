@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
 	def destroy
 		# @topic = Topic.find(params[:topic_id])
 		# @comment=@topic.comments.find(params[:id])
-		if @comment.detroy
+		if @comment.destroy
 			flash[:notice]="刪除成功"
 			# @topic.comments_number -= 1
 			
