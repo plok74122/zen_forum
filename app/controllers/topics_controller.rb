@@ -45,7 +45,7 @@ class TopicsController < ApplicationController
 			
 		@topic=Topic.find(params[:id])
 		if params[:record]=="viewing"
-			@topic.visitingnumber=@topic.visitingnumber+1
+			@topic.visitingnumber=@topic.visitingnumber + 1
 			@topic.save
 	   end
 		# @user=@topic.user
@@ -71,7 +71,7 @@ class TopicsController < ApplicationController
 	end
 
 	def create
-		@topic=Topic.new(params.require(:topic).permit(:title,:content,:status_published,:category_ids=>[]))
+		@topic=Topic.new(params.require(:topic).permit(:title,:content,:status_published,:photo,:category_ids=>[]))
 	    @topic.user=current_user
 	    if @topic.save
 	    	flash[:notice]="新增成功"
@@ -85,7 +85,11 @@ class TopicsController < ApplicationController
 	end
 
 	def update
-		if @topic.update(params.require(:topic).permit(:title,:content,:status_published))
+		if params[:remove_upload_file]=='1'
+       @topic.photo=nil
+    end
+
+		if @topic.update(params.require(:topic).permit(:title,:content,:photo,:status_published))
 		  flash[:notice]="更新成功"
 		  redirect_to topic_path(@topic)
 		else

@@ -10,6 +10,7 @@
 	<li><%= @topic.user.email %></li>
 	<li><%= @topic.created_at %></li>
 	<li><%= @topic.updated_at %></li>
+	<li><%= image_tag @topic.photo.url(:medium) %></li>
 </ul>
 <br>
 

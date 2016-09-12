@@ -11,4 +11,10 @@
 	<%=	f.label :content %>
 	<%=	f.text_area :content %>
   <%= f.select(:status_published, [['publised',true],['draft',false]]) %>
+  
+  <%= f.file_field :photo %>
+  <% if @topic.photo.exists? %>
+    <%= check_box_tag "remove_upload_file","1" %>移除上傳檔案
+  <% end %>
+
 	<%=	f.submit %>
