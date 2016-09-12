@@ -4,8 +4,8 @@ class TopicsController < ApplicationController
 	def index
         @topics = Topic.all
         @topics.each do |topic|
-        	topic.comments_number=topic.comments.count
-        	topic.comments_lastest_time=topic.comments.last.try(:created_at)
+        	topic.comments_number=topic.comments.where(:status_published => :true).count
+        	topic.comments_lastest_time=topic.comments.where(:status_published => :true).last.try(:created_at)
         	topic.save
         end
 
@@ -94,7 +94,7 @@ class TopicsController < ApplicationController
 	end
 
 	def destroy
-		@topic.delete
+		@topic.destroy
 		redirect_to topics_path
 	end
 
@@ -107,7 +107,7 @@ class TopicsController < ApplicationController
 	def keep
 		@topic=Topic.find(params[:id])
 		if current_user.keepedTopic?(@topic)
-			current_user.keeptopics.delete(@topic)
+			current_user.keeptopics.destroy(@topic)
 			# flash[:notice]="你已取消收藏"
 		else
 			current_user.keeptopics <<@topic

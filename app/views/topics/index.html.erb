@@ -35,7 +35,7 @@
 	<td><%=	t.title %></td>
 	<td><%= link_to	t.user.id ,user_path(t.user) %></td>
   <td><%= t.comments_number %></td>
-  <td><%= t.comments.map{|c| c.user.email}.uniq %></td> 
+  <td><%= t.comments.map{|c| c.user.email}.uniq.join(",") %></td> 
   <td><%= t.comments_lastest_time %></td>
   <td><%= t.visitingnumber %></td>
   <td> 

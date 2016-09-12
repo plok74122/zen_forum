@@ -27,7 +27,8 @@
 <h2>comments</h2>
 
 <ul>
-<% comments = @topic.comments_with_paginate(params[:page]) %>
+<% comments = @topic.comments_with_paginate(params[:page]).where(:status_published => :true) %>
+
 <% comments.each do |c| %>
   <% if c.status_published == true %>
 	  <li>

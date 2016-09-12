@@ -1,6 +1,5 @@
-class Admin::CategorysController < ApplicationController
+class Admin::CategorysController < AdminApplicationController
 
-  layout "admin"
 
   def index
   	@categorys = Category.all
@@ -37,7 +36,7 @@ class Admin::CategorysController < ApplicationController
   def destroy
     @category = Category.find(params[:id])
     if @category.topics.count == 0
-        @category.delete
+        @category.destroy
         flash[:notice] = "刪除成功"
     else
       flash[:notice] = "此分類已在使用無法刪除"
