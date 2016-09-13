@@ -34,8 +34,9 @@ class CommentsController < ApplicationController
 	def destroy
 		# @topic = Topic.find(params[:topic_id])
 		# @comment=@topic.comments.find(params[:id])
-		if @comment.destroy
-			flash[:notice]="刪除成功"
+		
+		  @comment.destroy
+			# flash[:notice]="刪除成功"
 			# @topic.comments_number -= 1
 			
    #    @topic.save
@@ -47,8 +48,11 @@ class CommentsController < ApplicationController
    #      @topic.comments_lastest_time = @topic.comments.last.created_at
    #    end
 
-		end
-		redirect_to topic_path(@topic)
+		
+		# redirect_to topic_path(@topic)
+		respond_to do |format|
+			format.js
+		end 
 
 	end
 

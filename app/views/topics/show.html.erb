@@ -32,11 +32,11 @@
 
 <% comments.each do |c| %>
   <% if c.status_published == true %>
-	  <li>
+	  <li id="comment-<%= c.id %>">
 	    <%= c.content %>
 	    <%= c.user.email %>
 	    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id)  if c.user == current_user %>
-	    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete" if c.user == current_user %>
+	    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete", :remote => true if c.user == current_user %>
 	  </li>
   <% end %>
 <% end %>
