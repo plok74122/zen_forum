@@ -33,7 +33,7 @@
  
  <tr>
 	<td><%=	t.title %></td>
-	<td><%= link_to	t.user.id ,user_path(t.user) %></td>
+	<td><%= link_to	t.user.id ,user_path(t.user.name) %></td>
   <td><%= t.comments_number %></td>
   <td><%= t.comments.map{|c| c.user.email}.uniq.join(",") %></td> 
   <td><%= t.comments_lastest_time %></td>
@@ -59,7 +59,7 @@
 <div>
   <% if current_user %>
     click your user_id and see your profile:
-    <%= link_to current_user.id,user_path(current_user)%>
+    <%= link_to current_user.id,user_path(current_user.name)%>
   <% end %>
 </div>
 

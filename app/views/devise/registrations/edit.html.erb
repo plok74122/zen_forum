@@ -20,6 +20,8 @@
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
+  <div><%= f.label :name %><br />
+  <%= f.text_field :name %></div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
@@ -30,6 +32,7 @@
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
+
 
   <div class="actions">
     <%= f.submit "Update" %>

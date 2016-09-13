@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
   resources :topics do
   	resources :comments
   	collection do
@@ -22,7 +23,8 @@ Rails.application.routes.draw do
   resources :categorys 
   resources :users 
 
-end
+ end
 
 root to: "topics#index"
+
 end

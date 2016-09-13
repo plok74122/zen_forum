@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	before_action :authenticate_user!,:except=>[:show]
 	before_action :check_author,:except=>[:show]
 	def show
-		@user=User.find(params[:id])
+		@user=User.find_by_name(params[:id])
 		
 	end
 
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
 	def update
     @user=User.find(params[:id])
-		@user.update(params.require(:user).permit(:profile, :name))
+		@user.update(params.require(:user).permit(:profile, :name, :role))
 		redirect_to user_path(@user)
 	end
 

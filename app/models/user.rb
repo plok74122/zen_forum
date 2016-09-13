@@ -8,7 +8,8 @@ class User < ApplicationRecord
   has_many :comments,:dependent=>:destroy
   has_many :keepships, :dependent=>:destroy
   has_many :keeptopics, :through=>:keepships, :source => :topic
-
+  validates_presence_of :name
+  
   include Gravtastic
   gravtastic
   
