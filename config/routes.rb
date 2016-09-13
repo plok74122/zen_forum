@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   	end
   	member do
   		post :keep
+      post :like
   	end
 
   end

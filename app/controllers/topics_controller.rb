@@ -63,6 +63,8 @@ class TopicsController < ApplicationController
     	redirect_to topic_path(@topic)
     	return
     end
+    
+    @like_num = Likeship.where(:topic => @topic).count
 
 	end
 
@@ -118,6 +120,23 @@ class TopicsController < ApplicationController
 			# flash[:notice]="收藏成功"
 		end
 
+		respond_to do |format|
+			format.js
+		end
+
+	end
+
+	def like
+		@topic=Topic.find(params[:id])
+		if current_user.likedTopic?(@topic)
+			current_user.like_topics.destroy(@topic)
+			# flash[:notice]="你已取消收藏"
+		else
+			current_user.like_topics <<@topic
+			# flash[:notice]="收藏成功"
+		end
+    
+    @like_num = Likeship.where(:topic => @topic).count
 		respond_to do |format|
 			format.js
 		end

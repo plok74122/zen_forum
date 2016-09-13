@@ -1,0 +1,6 @@
+<% if current_user.likedTopic?(@topic) %>
+	$('.like input[type=submit]').val("unlike")
+<% else %>
+	$('.like input[type=submit]').val("like")
+<% end %>
+$('.like_num').html("<%= @like_num %>like")

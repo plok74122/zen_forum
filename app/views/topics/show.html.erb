@@ -24,6 +24,18 @@
  <% end	%>
 </div>
 
+<div class="like">
+ <% if current_user %>
+	<% if current_user.likedTopic?(@topic) %>
+	  <%= button_to "unlike",like_topic_path(@topic),:remote => true  %>
+	<% else %>
+	  <%= button_to "like",like_topic_path(@topic),:remote => true  %>
+	<% end %>
+ <% end	%>
+</div>
+<div class="like_num">
+ <%= @like_num %> like
+</div>
 <br>
 <h2>comments</h2>
 

@@ -4,17 +4,23 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
+  validates_presence_of :name
   has_many :topics,:dependent=>:destroy
   has_many :comments,:dependent=>:destroy
   has_many :keepships, :dependent=>:destroy
   has_many :keeptopics, :through=>:keepships, :source => :topic
-  validates_presence_of :name
+  has_many :likeships, :dependent=>:destroy
+  has_many :like_topics, :through=>:likeships, :source => :topic
   
   include Gravtastic
   gravtastic
   
   def keepedTopic?(topic)
   	self.keeptopics.include?(topic)
+  end
+
+  def likedTopic?(topic)
+    self.like_topics.include?(topic)
   end
 
   def admin?
