@@ -40,6 +40,15 @@
 <% end %>
 </div>
 
+<div class="subscribe">
+ <% if current_user %>
+	<% if current_user.subscribedTopic?(@topic) %>
+	  <%= button_to "unsubscribe",subscribe_topic_path(@topic),:remote => true  %>
+	<% else %>
+	  <%= button_to "subscribe",subscribe_topic_path(@topic),:remote => true  %>
+	<% end %>
+ <% end	%>
+</div>
 
 
 

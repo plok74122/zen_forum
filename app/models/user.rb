@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :keeptopics, :through=>:keepships, :source => :topic
   has_many :likeships, :dependent=>:destroy
   has_many :like_topics, :through=>:likeships, :source => :topic
+  has_many :subscribeships, :dependent=>:destroy
+  has_many :subscribe_topics, :through=>:subscribeships, :source => :topic
   
   include Gravtastic
   gravtastic
@@ -21,6 +23,10 @@ class User < ApplicationRecord
 
   def likedTopic?(topic)
     self.like_topics.include?(topic)
+  end
+
+  def subscribedTopic?(topic)
+    self.subscribe_topics.include?(topic)
   end
 
   def admin?

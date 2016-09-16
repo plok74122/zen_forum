@@ -143,6 +143,20 @@ class TopicsController < ApplicationController
 
 	end
 
+	def subscribe
+		@topic=Topic.find(params[:id])
+		if current_user.subscribedTopic?(@topic)
+			current_user.subscribe_topics.destroy(@topic)
+		else
+			current_user.subscribe_topics <<@topic
+		end
+
+		respond_to do |format|
+			format.js
+		end
+
+	end
+
 	private
 	def check_author
 		if current_user.admin?

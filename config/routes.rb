@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   	member do
   		post :keep
       post :like
+      post :subscribe
   	end
 
   end

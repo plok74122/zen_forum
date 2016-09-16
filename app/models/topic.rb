@@ -8,6 +8,8 @@ class Topic < ApplicationRecord
 	has_many :keepusers, :through=>:keepships, :source => :user
   has_many :likeships, :dependent=>:destroy
 	has_many :like_users, :through=>:likeships, :source => :user
+	has_many :subscribeships, :dependent=>:destroy
+	has_many :subscirbe_users, :through=>:subscribeships, :source => :user
 
 	# @topic.comments_with_paginate
 	def comments_with_paginate(page)

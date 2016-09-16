@@ -1,0 +1,5 @@
+<% if current_user.subscribedTopic?(@topic) %>
+	$('.subscribe input[type=submit]').val("unsubscribe")
+<% else %>
+	$('.subscribe input[type=submit]').val("subscribe")
+<% end %>
