@@ -71,5 +71,15 @@
 	<% end %>
 	</ul>
 
+<h2>按like文章</h2>
+
+	<ul>
+	<% @user.like_topics.each do |t| %>
+		<li>
+			文章名稱：<%= t.title %>
+			<%=	link_to "show",topic_path(t)%>
+		</li>
+	<% end %>
+	</ul>
 
 <%=	link_to "home",topics_path %>

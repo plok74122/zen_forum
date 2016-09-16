@@ -3,4 +3,8 @@
 <% else %>
 	$('.like input[type=submit]').val("like")
 <% end %>
-$('.like_num').html("<%= @like_num %>like")
+
+
+$('.like_num').html("<%= @like_num %>like <% @topic.like_users.each do |u| %> <%= u.name %> <% end %>")
+
+

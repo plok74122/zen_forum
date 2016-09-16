@@ -35,7 +35,14 @@
 </div>
 <div class="like_num">
  <%= @like_num %> like
+ <% @topic.like_users.each do |u| %> 
+ <%= u.name %>
+<% end %>
 </div>
+
+
+
+
 <br>
 <h2>comments</h2>
 
