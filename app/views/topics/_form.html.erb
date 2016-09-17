@@ -5,7 +5,15 @@
       <% end %>
     </ul>
 <% end %>
+<div class="form-group">  
     <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
+</div>
+<div class="form-group">  
+    <%= f.select :tag_ids, Tag.all.map{ |x| [ x.name, x.id] }, {}, :multiple => true %>
+</div>
+
+
+
 	<%=	f.label :title %>
 	<%=	f.text_field :title %>
 	<%=	f.label :content %>
@@ -18,3 +26,9 @@
   <% end %>
 
 	<%=	f.submit %>
+
+  <script>
+     $("#topic_tag_ids").select2({
+        tags: true
+      })
+  </script>

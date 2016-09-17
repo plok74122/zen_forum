@@ -10,11 +10,25 @@ class Topic < ApplicationRecord
 	has_many :like_users, :through=>:likeships, :source => :user
 	has_many :subscribeships, :dependent=>:destroy
 	has_many :subscirbe_users, :through=>:subscribeships, :source => :user
+  has_many :tagships,:dependent=>:destroy
+	has_many :tags, :through=> :tagships
 
 	# @topic.comments_with_paginate
 	def comments_with_paginate(page)
 		comments.page(page).per(5)
 	end
+
+	def tag_list
+      self.tags.map{ |x| x.name }.join(",")
+  end
+
+  def tag_list=(str)
+      ids = str.split(",").map do |tag_name|
+        tag_name.strip!
+        tag = Tag.find_by_name( tag_name ) || Tag.create( :name => tag_name )
+        tag.id
+      end
+  end
 
 	has_attached_file :photo, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/

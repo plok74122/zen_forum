@@ -21,6 +21,7 @@ gem 'kaminari'
 gem 'gravtastic'
 gem 'omniauth-facebook'
 gem "paperclip"
+gem "select2-rails"
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
