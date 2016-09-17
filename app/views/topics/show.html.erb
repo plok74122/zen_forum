@@ -83,7 +83,7 @@
 		<%=	f.label :content %>
 		<%=	f.text_area :content %>
 		<%= f.select(:status_published, [['publised',true],['draft',false]]) %>
-		<%=	f.submit %>
+		<%=	f.submit :remote => true %>
 	<% end %>
 <% end%>
 
