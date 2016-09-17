@@ -9,16 +9,16 @@ class CommentsController < ApplicationController
 
     if @comment.save
       flash[:notice]="新增成功"
-      # @topic.comments_number += 1
-      # 	@topic.comments_lastest_time = @comment.created_at
-      # 	@topic.save
+      @topic.comments_number += 1
+      @topic.comments_lastest_time = @comment.created_at
+      @topic.save
       respond_to do |format|
         format.js
       end
     else
       flash[:alert] = "留言不能是空白"
     end
-    redirect_to topic_path(@topic)
+    # redirect_to topic_path(@topic)
 
 
   end

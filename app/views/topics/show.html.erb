@@ -55,7 +55,7 @@
 <br>
 <h2>comments</h2>
 
-<ul>
+<ul id="comments-list">
   <% comments = @topic.comments_with_paginate(params[:page]).where(:status_published => :true) %>
 
   <% comments.each do |c| %>
@@ -79,7 +79,7 @@
         <%= f.submit %>
     <% end %>
 <% else %>
-    <%= form_for @comment, :url => topic_comments_path(@topic) do |f| %>
+    <%= form_for @comment, :url => topic_comments_path(@topic), :remote => true do |f| %>
         <%= f.label :content %>
         <%= f.text_area :content %>
         <%= f.select(:status_published, [['publised', true], ['draft', false]]) %>

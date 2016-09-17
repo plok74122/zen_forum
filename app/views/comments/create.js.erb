@@ -1,2 +1,3 @@
-$("#comment-<%= @comment.id %>").append();
-console.log("hi")
+$("#comments-list").prepend(
+    "<li id='comment-<%= @comment.id %>'><%= @comment.content %><%= j @comment.user.email %><%=j link_to "edit", topic_path(@topic, :comment_id => @comment.id) if @comment.user == current_user %><%=j link_to "delete", topic_comment_path(@topic, @comment), :method => "delete", :remote => true if @comment.user == current_user %></li>"
+);
