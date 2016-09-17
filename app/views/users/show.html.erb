@@ -1,85 +1,85 @@
 <h1>User's profile</h1>
 <%= @user.email %>
 <%= @user.profile %>
-<br>	
+<br>
 
 <% if @user.profile %>
-	<%=	link_to "edit profile",edit_user_path(@user) if current_user == @user%>
+    <%= link_to "edit profile", edit_user_path(@user) if current_user == @user %>
 <% else %>
-	<%=	link_to "add profile",edit_user_path(@user)%>
+    <%= link_to "add profile", edit_user_path(@user) %>
 <% end %>
 
 
 <h2>發表過文章</h2>
 <ul>
-<% @user.topics.each do |t| %>
-	<li>
-		文章名稱：<%= t.title %>
-		文章內容：<%= t.content %>
+  <% @user.topics.each do |t| %>
+      <li>
+        文章名稱：<%= t.title %>
+        文章內容：<%= t.content %>
 
-    <% if @user == current_user %>
-		  文章狀態：
-		  <% if t.status_published==true %>
-		    發布
-		    <%= link_to "show",topic_path(t)%>
-		  <% else %>
-         草稿
-         <%=	link_to "edit",edit_topic_path(t)%>
-      <% end %>
-    <% else %>
-      <%= link_to "show",topic_path(t)%>
-		<% end %> 
-		  
-		
-	</li>
-<% end %>
+        <% if @user == current_user %>
+            文章狀態：
+            <% if t.status_published==true %>
+                發布
+                <%= link_to "show", topic_path(t) %>
+            <% else %>
+                草稿
+                <%= link_to "edit", edit_topic_path(t) %>
+            <% end %>
+        <% else %>
+            <%= link_to "show", topic_path(t) %>
+        <% end %>
+
+
+      </li>
+  <% end %>
 </ul>
 
 <h2>發表過留言</h2>
 
-	<ul>
-	<% @user.comments.each do |c| %>
-		<li>
-			文章名稱：<%= c.topic.title %>
-			留言內容：<%= c.content %>
+<ul>
+  <% @user.comments.each do |c| %>
+      <li>
+        文章名稱：<%= c.topic.title %>
+        留言內容：<%= c.content %>
 
-    <% if @user == current_user %>
-		  留言狀態：
-		  <% if c.status_published==true %>
-		     發布
-		    <%= link_to "show",topic_path(c.topic)%>
-		  <% else %>
-         草稿
-         <%=	link_to "edit",topic_path(c.topic,c)%>
-      <% end %>
-    <% else %>
-      <%= link_to "show",topic_path(c.topic)%>
-		<% end %> 			
+        <% if @user == current_user %>
+            留言狀態：
+            <% if c.status_published==true %>
+                發布
+                <%= link_to "show", topic_path(c.topic) %>
+            <% else %>
+                草稿
+                <%= link_to "edit", topic_path(c.topic, c) %>
+            <% end %>
+        <% else %>
+            <%= link_to "show", topic_path(c.topic) %>
+        <% end %>
 
-		</li>
-	<% end %>
-	</ul>
+      </li>
+  <% end %>
+</ul>
 
 <h2>收藏文章</h2>
 
-	<ul>
-	<% @user.keeptopics.each do |t| %>
-		<li>
-			文章名稱：<%= t.title %>
-			<%=	link_to "show",topic_path(t)%>
-		</li>
-	<% end %>
-	</ul>
+<ul>
+  <% @user.keeptopics.each do |t| %>
+      <li>
+        文章名稱：<%= t.title %>
+        <%= link_to "show", topic_path(t) %>
+      </li>
+  <% end %>
+</ul>
 
 <h2>按like文章</h2>
 
-	<ul>
-	<% @user.like_topics.each do |t| %>
-		<li>
-			文章名稱：<%= t.title %>
-			<%=	link_to "show",topic_path(t)%>
-		</li>
-	<% end %>
-	</ul>
+<ul>
+  <% @user.like_topics.each do |t| %>
+      <li>
+        文章名稱：<%= t.title %>
+        <%= link_to "show", topic_path(t) %>
+      </li>
+  <% end %>
+</ul>
 
-<%=	link_to "home",topics_path %>
+<%= link_to "home", topics_path %>

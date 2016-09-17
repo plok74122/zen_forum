@@ -1,53 +1,53 @@
 <p>Categories:
-	<% @topic.categorys.each do |c| %>
-		<%= c.name %>
-	<% end %>
+  <% @topic.categorys.each do |c| %>
+      <%= c.name %>
+  <% end %>
 </p>
 
 <ul>
-	<li><%= @topic.title %></li>
-	<li><%= @topic.content %></li>
-	<li><%= @topic.user.email %></li>
-	<li><%= @topic.created_at %></li>
-	<li><%= @topic.updated_at %></li>
-	<li><%= image_tag @topic.photo.url(:medium) %></li>
+  <li><%= @topic.title %></li>
+  <li><%= @topic.content %></li>
+  <li><%= @topic.user.email %></li>
+  <li><%= @topic.created_at %></li>
+  <li><%= @topic.updated_at %></li>
+  <li><%= image_tag @topic.photo.url(:medium) %></li>
 </ul>
 <br>
 
 <div class="keep">
- <% if current_user %>
-	<% if current_user.keepedTopic?(@topic) %>
-	  <%= button_to "取消收藏",keep_topic_path(@topic),:remote => true  %>
-	<% else %>
-	  <%= button_to "收藏",keep_topic_path(@topic),:remote => true  %>
-	<% end %>
- <% end	%>
+  <% if current_user %>
+      <% if current_user.keepedTopic?(@topic) %>
+          <%= button_to "取消收藏", keep_topic_path(@topic), :remote => true %>
+      <% else %>
+          <%= button_to "收藏", keep_topic_path(@topic), :remote => true %>
+      <% end %>
+  <% end %>
 </div>
 
 <div class="like">
- <% if current_user %>
-	<% if current_user.likedTopic?(@topic) %>
-	  <%= button_to "unlike",like_topic_path(@topic),:remote => true  %>
-	<% else %>
-	  <%= button_to "like",like_topic_path(@topic),:remote => true  %>
-	<% end %>
- <% end	%>
+  <% if current_user %>
+      <% if current_user.likedTopic?(@topic) %>
+          <%= button_to "unlike", like_topic_path(@topic), :remote => true %>
+      <% else %>
+          <%= button_to "like", like_topic_path(@topic), :remote => true %>
+      <% end %>
+  <% end %>
 </div>
 <div class="like_num">
- <%= @like_num %> like
- <% @topic.like_users.each do |u| %> 
- <%= u.name %>
-<% end %>
+  <%= @like_num %> like
+  <% @topic.like_users.each do |u| %>
+      <%= u.name %>
+  <% end %>
 </div>
 
 <div class="subscribe">
- <% if current_user %>
-	<% if current_user.subscribedTopic?(@topic) %>
-	  <%= button_to "unsubscribe",subscribe_topic_path(@topic),:remote => true  %>
-	<% else %>
-	  <%= button_to "subscribe",subscribe_topic_path(@topic),:remote => true  %>
-	<% end %>
- <% end	%>
+  <% if current_user %>
+      <% if current_user.subscribedTopic?(@topic) %>
+          <%= button_to "unsubscribe", subscribe_topic_path(@topic), :remote => true %>
+      <% else %>
+          <%= button_to "subscribe", subscribe_topic_path(@topic), :remote => true %>
+      <% end %>
+  <% end %>
 </div>
 
 
@@ -56,45 +56,45 @@
 <h2>comments</h2>
 
 <ul>
-<% comments = @topic.comments_with_paginate(params[:page]).where(:status_published => :true) %>
+  <% comments = @topic.comments_with_paginate(params[:page]).where(:status_published => :true) %>
 
-<% comments.each do |c| %>
-  <% if c.status_published == true %>
-	  <li id="comment-<%= c.id %>">
-	    <%= c.content %>
-	    <%= c.user.email %>
-	    <%= link_to "edit",topic_path(@topic,:comment_id=>c.id)  if c.user == current_user %>
-	    <%= link_to "delete",topic_comment_path(@topic,c),:method=>"delete", :remote => true if c.user == current_user %>
-	  </li>
+  <% comments.each do |c| %>
+      <% if c.status_published == true %>
+          <li id="comment-<%= c.id %>">
+            <%= c.content %>
+            <%= c.user.email %>
+            <%= link_to "edit", topic_path(@topic, :comment_id => c.id) if c.user == current_user %>
+            <%= link_to "delete", topic_comment_path(@topic, c), :method => "delete", :remote => true if c.user == current_user %>
+          </li>
+      <% end %>
   <% end %>
-<% end %>
 </ul>
 <%= paginate comments %>
 
 <% if @comment.id %>
-	<%= form_for @comment, :url=>topic_comment_path(@topic,@comment) do |f| %>
-		<%=	f.label :content %>
-		<%=	f.text_area :content %>
-		<%= f.select(:status_published, [['publised',true],['draft',false]]) %>
-		<%=	f.submit %>
-	<% end %>
+    <%= form_for @comment, :url => topic_comment_path(@topic, @comment) do |f| %>
+        <%= f.label :content %>
+        <%= f.text_area :content %>
+        <%= f.select(:status_published, [['publised', true], ['draft', false]]) %>
+        <%= f.submit %>
+    <% end %>
 <% else %>
-	<%= form_for @comment, :url=>topic_comments_path(@topic) do |f| %>
-		<%=	f.label :content %>
-		<%=	f.text_area :content %>
-		<%= f.select(:status_published, [['publised',true],['draft',false]]) %>
-		<%=	f.submit :remote => true %>
-	<% end %>
-<% end%>
+    <%= form_for @comment, :url => topic_comments_path(@topic) do |f| %>
+        <%= f.label :content %>
+        <%= f.text_area :content %>
+        <%= f.select(:status_published, [['publised', true], ['draft', false]]) %>
+        <%= f.submit :remote => true %>
+    <% end %>
+<% end %>
 
 <% if @comment.errors.any? %>
     <ul>
       <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+          <li><%= msg %></li>
       <% end %>
     </ul>
 <% end %>
 
 
 <br>
-<%=	link_to "home",topics_path %>
+<%= link_to "home", topics_path %>

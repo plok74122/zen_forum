@@ -73,7 +73,7 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic=Topic.new(params.require(:topic).permit(:title, :content, :status_published, :photo, :category_ids => [] , :tag_list => []))
+    @topic=Topic.new(topic_params)
     @topic.user=current_user
     if @topic.save
       flash[:notice]="新增成功"
@@ -170,6 +170,9 @@ class TopicsController < ApplicationController
         return
       end
     end
+  end
+  def topic_params
+    params.require(:topic).permit(:title, :content, :status_published, :photo, :category_ids => [] , :tag_list => [])
   end
 
 end
